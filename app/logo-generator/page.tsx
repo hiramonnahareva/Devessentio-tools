@@ -496,7 +496,7 @@ export default function UltimateProLogoBuilder() {
                   ? `linear-gradient(135deg, ${bgGradient.from}, ${bgGradient.to})`
                   : `radial-gradient(circle, ${bgGradient.from}, ${bgGradient.to})`,
         }}
-        onClick={(e) => {
+        onClick={(e: any) => {
           if (e.target === canvasRef.current) setSelectedId(null);
         }}
       >
@@ -635,7 +635,7 @@ export default function UltimateProLogoBuilder() {
                     y: position.y,
                   });
                 }}
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                   setSelectedId(item.id);
                 }}

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export default function Home() {
+export default function ColorPalette() {
   const [color, setColor] = useState("#ff0000");
 
   const hexToRgb = (hex: string): string => {
@@ -53,10 +53,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-950 p-4 text-white">
-      <h1 className="text-4xl font-bold mb-8">🎨 Dark Mode Color Picker</h1>
+      <h1 className="text-4xl font-bold mb-8">🎨 Color Palette</h1>
 
       <div className="flex flex-col items-center gap-6 w-full max-w-md">
-        {/* Color Picker */}
         <input
           type="color"
           value={color}
@@ -64,13 +63,11 @@ export default function Home() {
           className="w-32 h-16 rounded-lg border border-gray-700 cursor-pointer shadow-lg"
         />
 
-        {/* Color Preview */}
         <div
           className="w-64 h-64 rounded-xl shadow-xl border-2 border-gray-700"
           style={{ backgroundColor: color }}
         ></div>
 
-        {/* CSS Values */}
         <div className="w-full flex flex-col gap-4">
           {/* HEX */}
           <div className="flex justify-between items-center bg-gray-800 p-3 rounded shadow hover:shadow-lg transition">
@@ -109,4 +106,3 @@ export default function Home() {
     </div>
   );
 }
-
