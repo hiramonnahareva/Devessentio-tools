@@ -26,14 +26,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en"> 
-      <body
-        className={`flex ${geistSans.variable} ${geistMono.variable} antialiased cursor-defaultbg-gray-900`}
-      >
-        <SidebarWrapper/>
+      <body>
+        <div className={`flex ${geistSans.variable} ${geistMono.variable} antialiased cursor-defaultbg-gray-900`}>
+          <SidebarWrapper/>
         <main className="flex-1 bg-gray-100 min-h-screen">
           {children}
         </main>
          <Toaster />
+        </div>
       </body>
     </html>
   );
