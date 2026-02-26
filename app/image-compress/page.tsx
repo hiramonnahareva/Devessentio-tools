@@ -77,7 +77,7 @@ export default function ImageCompressor() {
 
         {/* Quality Slider */}
         {originalFile && (
-          <div className="bg-gray-900 p-6 rounded-xl border border-gray-800">
+          <div className="p-6 rounded-xl border border-gray-800 bg-gradient-to-br from-gray-950 via-gray-900">
             <label className="block mb-3 text-sm">
               Compression Quality: {Math.round(quality * 100)}%
             </label>

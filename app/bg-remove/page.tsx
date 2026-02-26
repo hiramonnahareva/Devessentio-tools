@@ -67,7 +67,7 @@ export default function BgRemoveAdvanced() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-6 p-8 bg-gray-900 text-white">
+    <div className="min-h-screen flex flex-col items-center justify-center gap-6 bg-gray-950 p-8 text-white">
       <h2 className="text-3xl font-bold">Advanced Background Remover</h2>
 
      <label className={`flex flex-col items-center justify-center border-2 border-dashed border-gray-700 rounded-xl p-10 cursor-pointer hover:border-blue-500 transition`}>

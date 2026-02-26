@@ -369,7 +369,7 @@ export default function ShapeStudio() {
 };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 p-6 flex flex-col items-center space-y-8">
+    <div className="min-h-screen text-gray-100 p-6 flex flex-col items-center space-y-8 bg-gray-950">
       <h1 className="text-4xl font-bold text-center">DevEssentio Shape Studio</h1>
 
       {/* Controls */}

@@ -169,7 +169,7 @@ export default function UltimateProLogoBuilder() {
   ]);
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white p-6 gap-6 select-none">
+    <div className="flex min-h-screen text-white p-6 gap-6 select-none bg-gray-950">
       {/* Sidebar */}
       <div className="w-80 bg-gray-800 rounded-xl p-6 flex flex-col gap-4 shrink-0">
         <h2 className="text-2xl font-bold mb-4">Ultimate Logo Builder</h2>
