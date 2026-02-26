@@ -41,7 +41,7 @@ export default function UltimateProLogoBuilder() {
 
   // Canvas size & shape
   const [canvasWidth, setCanvasWidth] = useState(900);
-  const [canvasHeight, setCanvasHeight] = useState(600);
+  const [canvasHeight, setCanvasHeight] = useState(900);
   const [isCircle, setIsCircle] = useState(false);
 
   // Canvas background
@@ -437,7 +437,7 @@ export default function UltimateProLogoBuilder() {
             Width: {canvasWidth}px
             <input
               type="range"
-              min={300}
+              min={160}
               max={800}
               value={canvasWidth}
               onChange={(e) => setCanvasWidth(Number(e.target.value))}
@@ -448,7 +448,7 @@ export default function UltimateProLogoBuilder() {
             Height: {canvasHeight}px
             <input
               type="range"
-              min={300}
+              min={160}
               max={800}
               value={canvasHeight}
               onChange={(e) => setCanvasHeight(Number(e.target.value))}
@@ -463,6 +463,60 @@ export default function UltimateProLogoBuilder() {
               onChange={(e) => setIsCircle(e.target.checked)}
             />
           </label>
+          <label>Background Type</label>
+          <select
+            value={bgType}
+            onChange={(e) => setBgType(e.target.value as any)}
+            className="w-full p-1 rounded bg-gray-700 text-white"
+          >
+            <option value="solid">Solid Color</option>
+            <option value="gradient">Gradient</option>
+            <option value="transparent">Transparent</option>
+          </select>
+          {bgType === "gradient" && (
+            <div className="flex flex-col gap-2">
+              <label>
+                Gradient Type
+                <select
+                  value={bgGradient.type}
+                  onChange={(e) =>
+                    setBgGradient({
+                      ...bgGradient,
+                      type: e.target.value as any,
+                    })
+                  }
+                  className="w-full p-1 rounded bg-gray-700 text-white"
+                >
+                  <option value="linear">Linear</option>
+                  <option value="radial">Radial</option>
+                </select>
+              </label>
+
+              <label>
+                From
+                <input
+                  type="color"
+                  value={bgGradient.from}
+                  onChange={(e) =>
+                    setBgGradient({ ...bgGradient, from: e.target.value })
+                  }
+                  className="w-full h-8 rounded"
+                />
+              </label>
+
+              <label>
+                To
+                <input
+                  type="color"
+                  value={bgGradient.to}
+                  onChange={(e) =>
+                    setBgGradient({ ...bgGradient, to: e.target.value })
+                  }
+                  className="w-full h-8 rounded"
+                />
+              </label>
+            </div>
+          )}
         </div>
 
         <button
@@ -574,7 +628,7 @@ export default function UltimateProLogoBuilder() {
                   setSelectedId(item.id);
                 }}
                 style={{
-                  border: selectedId === item.id ? "2px solid #60a5fa" : "none", 
+                  border: selectedId === item.id ? "2px solid #60a5fa" : "none",
                   userSelect: "none",
                   cursor: "grab",
                   zIndex: selectedId === item.id ? 10 : 1,
@@ -582,7 +636,6 @@ export default function UltimateProLogoBuilder() {
                   justifyContent: "center",
                   alignItems: "center",
                   transform: `rotate(${item.rotation}deg)`,
-                  
                 }}
               >
                 <svg width={item.width} height={item.height}>
@@ -604,7 +657,7 @@ export default function UltimateProLogoBuilder() {
                     }}
                   >
                     <textPath
-                      href={`#curvePath-${item.id}`} 
+                      href={`#curvePath-${item.id}`}
                       startOffset="10%"
                       textAnchor="start"
                       dominantBaseline="middle"
@@ -665,8 +718,3 @@ export default function UltimateProLogoBuilder() {
     </div>
   );
 }
-
-
-
-
-

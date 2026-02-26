@@ -57,9 +57,11 @@ export default function Sidebar() {
       </div>
 
       {/* Logo / Title */}
+      <Link href="/" >
       <h1 className="text-2xl font-bold mb-10">
         {open ? "DevEssentio" : "DE"}
       </h1>
+      </Link>
 
       {/* Links */}
       <ul className="flex-1 space-y-4 overflow-y-auto pr-2">
