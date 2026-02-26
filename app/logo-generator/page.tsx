@@ -569,7 +569,7 @@ export default function UltimateProLogoBuilder() {
                     height: parseInt(ref.style.height),
                   })
                 }
-                onClick={(e) => {
+                onClick={(e: any) => {
                   e.stopPropagation();
                   setSelectedId(item.id);
                 }}
