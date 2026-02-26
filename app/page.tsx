@@ -1,888 +1,182 @@
-// // // "use client";
-
-// // // import { useState, useRef, useEffect } from "react";
-
-// // // type ShapeType = "circle" | "rounded" | "triangle";
-
-// // // export default function ShapeGenerator() {
-// // //   const [shape, setShape] = useState<ShapeType>("circle");
-// // //   const [size, setSize] = useState(200);
-// // //   const [radius, setRadius] = useState(30);
-// // //   const [color, setColor] = useState("#6366f1");
-
-// // //   const svgRef = useRef<SVGSVGElement | null>(null);
-
-// // //   // Smooth animation for preview
-// // //   const [animatedSize, setAnimatedSize] = useState(size);
-// // //   useEffect(() => {
-// // //     const timeout = setTimeout(() => setAnimatedSize(size), 100);
-// // //     return () => clearTimeout(timeout);
-// // //   }, [size]);
-
-// // //   const downloadSVG = () => {
-// // //     if (!svgRef.current) return;
-// // //     const serializer = new XMLSerializer();
-// // //     const source = serializer.serializeToString(svgRef.current);
-// // //     const blob = new Blob([source], { type: "image/svg+xml" });
-// // //     const url = URL.createObjectURL(blob);
-// // //     const link = document.createElement("a");
-// // //     link.href = url;
-// // //     link.download = "devessentio-shape.svg";
-// // //     link.click();
-// // //   };
-
-// // //   const downloadPNG = () => {
-// // //     if (!svgRef.current) return;
-// // //     const serializer = new XMLSerializer();
-// // //     const source = serializer.serializeToString(svgRef.current);
-// // //     const img = new Image();
-// // //     const svgBlob = new Blob([source], { type: "image/svg+xml" });
-// // //     const url = URL.createObjectURL(svgBlob);
-// // //     img.onload = () => {
-// // //       const canvas = document.createElement("canvas");
-// // //       canvas.width = size;
-// // //       canvas.height = size;
-// // //       const ctx = canvas.getContext("2d");
-// // //       if (!ctx) return;
-// // //       ctx.drawImage(img, 0, 0);
-// // //       const pngUrl = canvas.toDataURL("image/png");
-// // //       const link = document.createElement("a");
-// // //       link.href = pngUrl;
-// // //       link.download = "devessentio-shape.png";
-// // //       link.click();
-// // //     };
-// // //     img.src = url;
-// // //   };
-
-// // //   return (
-// // //     <div className="min-h-screen bg-gray-900 text-gray-100 p-6 flex flex-col items-center space-y-8">
-// // //       <h1 className="text-4xl font-bold text-center text-white">
-// // //         Advanced Shape Generator
-// // //       </h1>
-
-// // //       {/* Controls Panel */}
-// // //       <div className="grid md:grid-cols-3 gap-6 w-full max-w-5xl bg-gray-800/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-gray-700">
-// // //         {/* Shape Select */}
-// // //         <div>
-// // //           <label className="block mb-2 font-medium">Shape</label>
-// // //           <select
-// // //             value={shape}
-// // //             onChange={(e) => setShape(e.target.value as ShapeType)}
-// // //             className="w-full p-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-// // //           >
-// // //             <option value="circle">Circle</option>
-// // //             <option value="rounded">Rounded Square</option>
-// // //             <option value="triangle">Triangle</option>
-// // //           </select>
-// // //         </div>
-
-// // //         {/* Size */}
-// // //         <div>
-// // //           <label className="block mb-2 font-medium">
-// // //             Size: {size}px
-// // //           </label>
-// // //           <input
-// // //             type="range"
-// // //             min="100"
-// // //             max="400"
-// // //             value={size}
-// // //             onChange={(e) => setSize(Number(e.target.value))}
-// // //             className="w-full"
-// // //           />
-// // //         </div>
-
-// // //         {/* Radius (only for rounded) */}
-// // //         {shape === "rounded" && (
-// // //           <div>
-// // //             <label className="block mb-2 font-medium">
-// // //               Border Radius: {radius}px
-// // //             </label>
-// // //             <input
-// // //               type="range"
-// // //               min="0"
-// // //               max="200"
-// // //               value={radius}
-// // //               onChange={(e) => setRadius(Number(e.target.value))}
-// // //               className="w-full"
-// // //             />
-// // //           </div>
-// // //         )}
-
-// // //         {/* Color Picker */}
-// // //         <div className="md:col-span-3">
-// // //           <label className="block mb-2 font-medium">Color</label>
-// // //           <input
-// // //             type="color"
-// // //             value={color}
-// // //             onChange={(e) => setColor(e.target.value)}
-// // //             className="w-full h-10 border border-gray-600 rounded-md cursor-pointer"
-// // //           />
-// // //         </div>
-// // //       </div>
-
-// // //       {/* Preview Panel */}
-// // //       <div className="flex justify-center w-full">
-// // //         <div className="bg-gray-800/50 backdrop-blur-md p-6 rounded-3xl shadow-2xl border border-gray-700">
-// // //           <svg
-// // //             ref={svgRef}
-// // //             width={animatedSize}
-// // //             height={animatedSize}
-// // //             viewBox={`0 0 ${animatedSize} ${animatedSize}`}
-// // //             className="transition-all duration-300"
-// // //           >
-// // //             {shape === "circle" && (
-// // //               <circle
-// // //                 cx={animatedSize / 2}
-// // //                 cy={animatedSize / 2}
-// // //                 r={animatedSize / 2}
-// // //                 fill={color}
-// // //               />
-// // //             )}
-// // //             {shape === "rounded" && (
-// // //               <rect
-// // //                 width={animatedSize}
-// // //                 height={animatedSize}
-// // //                 rx={radius}
-// // //                 ry={radius}
-// // //                 fill={color}
-// // //               />
-// // //             )}
-// // //             {shape === "triangle" && (
-// // //               <polygon
-// // //                 points={`${animatedSize / 2},0 ${animatedSize},${animatedSize} 0,${animatedSize}`}
-// // //                 fill={color}
-// // //               />
-// // //             )}
-// // //           </svg>
-// // //         </div>
-// // //       </div>
-
-// // //       {/* Action Buttons */}
-// // //       <div className="flex flex-wrap justify-center gap-4">
-// // //         <button
-// // //           onClick={downloadSVG}
-// // //           className="bg-indigo-600 text-white px-6 py-2 rounded-xl shadow-lg hover:bg-indigo-700 transition"
-// // //         >
-// // //           Download SVG
-// // //         </button>
-// // //         <button
-// // //           onClick={downloadPNG}
-// // //           className="bg-green-600 text-white px-6 py-2 rounded-xl shadow-lg hover:bg-green-700 transition"
-// // //         >
-// // //           Download PNG
-// // //         </button>
-// // //       </div>
-// // //     </div>
-// // //   );
-// // // }
-
-
-// // "use client";
-
-// // import { useState, useRef, useEffect } from "react";
-
-// // type ShapeType = "circle" | "rounded" | "triangle";
-
-// // export default function ShapeGenerator() {
-// //   const [shape, setShape] = useState<ShapeType>("circle");
-// //   const [size, setSize] = useState(200);
-// //   const [radius, setRadius] = useState(30);
-// //   const [color, setColor] = useState("#6366f1");
-
-// //   const svgRef = useRef<SVGSVGElement | null>(null);
-
-// //   // Smooth animation for preview
-// //   const [animatedSize, setAnimatedSize] = useState(size);
-// //   useEffect(() => {
-// //     const timeout = setTimeout(() => setAnimatedSize(size), 100);
-// //     return () => clearTimeout(timeout);
-// //   }, [size]);
-
-// //   const downloadSVG = () => {
-// //     if (!svgRef.current) return;
-// //     const serializer = new XMLSerializer();
-// //     const source = serializer.serializeToString(svgRef.current);
-// //     const blob = new Blob([source], { type: "image/svg+xml" });
-// //     const url = URL.createObjectURL(blob);
-// //     const link = document.createElement("a");
-// //     link.href = url;
-// //     link.download = "devessentio-shape.svg";
-// //     link.click();
-// //   };
-
-// //   const downloadPNG = () => {
-// //     if (!svgRef.current) return;
-// //     const serializer = new XMLSerializer();
-// //     const source = serializer.serializeToString(svgRef.current);
-// //     const img = new Image();
-// //     const svgBlob = new Blob([source], { type: "image/svg+xml" });
-// //     const url = URL.createObjectURL(svgBlob);
-// //     img.onload = () => {
-// //       const canvas = document.createElement("canvas");
-// //       canvas.width = size;
-// //       canvas.height = size;
-// //       const ctx = canvas.getContext("2d");
-// //       if (!ctx) return;
-// //       ctx.drawImage(img, 0, 0);
-// //       const pngUrl = canvas.toDataURL("image/png");
-// //       const link = document.createElement("a");
-// //       link.href = pngUrl;
-// //       link.download = "devessentio-shape.png";
-// //       link.click();
-// //     };
-// //     img.src = url;
-// //   };
-
-// //   return (
-// //     <div className="min-h-screen bg-gradient-to-br from-gray-950 to-gray-900 text-gray-100 p-6 flex flex-col items-center space-y-8">
-// //       <h1 className="text-4xl font-bold text-center text-white">
-// //         Advanced Shape Generator
-// //       </h1>
-
-// //       {/* Controls Panel */}
-// //       <div className="grid md:grid-cols-3 gap-6 w-full max-w-5xl bg-gray-800/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-gray-700">
-// //         {/* Shape Select */}
-// //         <div>
-// //           <label className="block mb-2 font-medium">Shape</label>
-// //           <select
-// //             value={shape}
-// //             onChange={(e) => setShape(e.target.value as ShapeType)}
-// //             className="w-full p-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-// //           >
-// //             <option value="circle">Circle</option>
-// //             <option value="rounded">Rounded Square</option>
-// //             <option value="triangle">Triangle</option>
-// //           </select>
-// //         </div>
-
-// //         {/* Size */}
-// //         <div>
-// //           <label className="block mb-2 font-medium">
-// //             Size: {size}px
-// //           </label>
-// //           <input
-// //             type="range"
-// //             min="100"
-// //             max="400"
-// //             value={size}
-// //             onChange={(e) => setSize(Number(e.target.value))}
-// //             className="w-full"
-// //           />
-// //         </div>
-
-// //         {/* Radius (only for rounded) */}
-// //         {shape === "rounded" && (
-// //           <div>
-// //             <label className="block mb-2 font-medium">
-// //               Border Radius: {radius}px
-// //             </label>
-// //             <input
-// //               type="range"
-// //               min="0"
-// //               max="200"
-// //               value={radius}
-// //               onChange={(e) => setRadius(Number(e.target.value))}
-// //               className="w-full"
-// //             />
-// //           </div>
-// //         )}
-
-// //         {/* Color Picker */}
-// //         <div className="md:col-span-3">
-// //           <label className="block mb-2 font-medium">Color</label>
-// //           <input
-// //             type="color"
-// //             value={color}
-// //             onChange={(e) => setColor(e.target.value)}
-// //             className="w-full h-10 border border-gray-600 rounded-md cursor-pointer"
-// //           />
-// //         </div>
-// //       </div>
-
-// //       {/* Preview Panel */}
-// //       <div className="flex justify-center w-full">
-// //         <div className="backdrop-blur-md p-6 rounded-3xl shadow-2xl">
-// //           <svg
-// //             ref={svgRef}
-// //             width={animatedSize}
-// //             height={animatedSize}
-// //             viewBox={`0 0 ${animatedSize} ${animatedSize}`}
-// //             className="transition-all duration-300"
-// //           >
-// //             {shape === "circle" && (
-// //               <circle
-// //                 cx={animatedSize / 2}
-// //                 cy={animatedSize / 2}
-// //                 r={animatedSize / 2}
-// //                 fill={color}
-// //               />
-// //             )}
-// //             {shape === "rounded" && (
-// //               <rect
-// //                 width={animatedSize}
-// //                 height={animatedSize}
-// //                 rx={radius}
-// //                 ry={radius}
-// //                 fill={color}
-// //               />
-// //             )}
-// //             {shape === "triangle" && (
-// //               <polygon
-// //                 points={`${animatedSize / 2},0 ${animatedSize},${animatedSize} 0,${animatedSize}`}
-// //                 fill={color}
-// //               />
-// //             )}
-// //           </svg>
-// //         </div>
-// //       </div>
-
-// //       {/* Action Buttons */}
-// //       <div className="flex flex-wrap justify-center gap-4">
-// //         <button
-// //           onClick={downloadSVG}
-// //           className="bg-indigo-600 text-white px-6 py-2 rounded-xl shadow-lg hover:bg-indigo-700 transition"
-// //         >
-// //           Download SVG
-// //         </button>
-// //         <button
-// //           onClick={downloadPNG}
-// //           className="bg-green-600 text-white px-6 py-2 rounded-xl shadow-lg hover:bg-green-700 transition"
-// //         >
-// //           Download PNG
-// //         </button>
-// //       </div>
-// //     </div>
-// //   );
-// // }
-
-
-// "use client";
-
-// import { useState, useRef, useEffect } from "react";
-
-// type ShapeType = "circle" | "rounded" | "triangle" | "hexagon" | "star";
-// type GradientType = "solid" | "linear" | "radial";
-
-// export default function ShapeGenerator() {
-//   const [shape, setShape] = useState<ShapeType>("circle");
-//   const [size, setSize] = useState(200);
-//   const [radius, setRadius] = useState(30); // for rounded square
-//   const [gradientType, setGradientType] = useState<GradientType>("solid");
-//   const [color1, setColor1] = useState("#6366f1");
-//   const [color2, setColor2] = useState("#ec4899");
-
-//   const svgRef = useRef<SVGSVGElement | null>(null);
-
-//   const [animatedSize, setAnimatedSize] = useState(size);
-//   useEffect(() => {
-//     const timeout = setTimeout(() => setAnimatedSize(size), 100);
-//     return () => clearTimeout(timeout);
-//   }, [size]);
-
-//   // Generate Polygon Points (Hexagon / Star)
-//   const getPolygonPoints = () => {
-//     const points: string[] = [];
-//     const n = shape === "hexagon" ? 6 : 5; // star will use 5 points
-//     const center = size / 2;
-//     const r = size / 2;
-//     if (shape === "hexagon") {
-//       for (let i = 0; i < n; i++) {
-//         const angle = ((2 * Math.PI) / n) * i - Math.PI / 2;
-//         const x = center + r * Math.cos(angle);
-//         const y = center + r * Math.sin(angle);
-//         points.push(`${x},${y}`);
-//       }
-//     } else if (shape === "star") {
-//       const outer = r;
-//       const inner = r / 2.5;
-//       for (let i = 0; i < 10; i++) {
-//         const rad = (Math.PI / 5) * i - Math.PI / 2;
-//         const radiusPoint = i % 2 === 0 ? outer : inner;
-//         const x = size / 2 + radiusPoint * Math.cos(rad);
-//         const y = size / 2 + radiusPoint * Math.sin(rad);
-//         points.push(`${x},${y}`);
-//       }
-//     }
-//     return points.join(" ");
-//   };
-
-//   // Generate Gradient Fill
-//   const getFill = () => {
-//     if (gradientType === "solid") return color1;
-//     if (gradientType === "linear") return `url(#gradLinear)`;
-//     if (gradientType === "radial") return `url(#gradRadial)`;
-//     return color1;
-//   };
-
-//   const downloadSVG = () => {
-//     if (!svgRef.current) return;
-//     const serializer = new XMLSerializer();
-//     const source = serializer.serializeToString(svgRef.current);
-//     const blob = new Blob([source], { type: "image/svg+xml" });
-//     const url = URL.createObjectURL(blob);
-//     const link = document.createElement("a");
-//     link.href = url;
-//     link.download = "devessentio-shape.svg";
-//     link.click();
-//   };
-
-//   const downloadPNG = () => {
-//     if (!svgRef.current) return;
-//     const serializer = new XMLSerializer();
-//     const source = serializer.serializeToString(svgRef.current);
-//     const img = new Image();
-//     const svgBlob = new Blob([source], { type: "image/svg+xml" });
-//     const url = URL.createObjectURL(svgBlob);
-//     img.onload = () => {
-//       const canvas = document.createElement("canvas");
-//       canvas.width = size;
-//       canvas.height = size;
-//       const ctx = canvas.getContext("2d");
-//       if (!ctx) return;
-//       ctx.drawImage(img, 0, 0);
-//       const pngUrl = canvas.toDataURL("image/png");
-//       const link = document.createElement("a");
-//       link.href = pngUrl;
-//       link.download = "devessentio-shape.png";
-//       link.click();
-//     };
-//     img.src = url;
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-gray-900 text-gray-100 p-6 flex flex-col items-center space-y-8">
-//       <h1 className="text-4xl font-bold text-center">DevEssentio Shape Studio</h1>
-
-//       {/* Controls Panel */}
-//       <div className="grid md:grid-cols-3 gap-6 w-full max-w-5xl bg-gray-800/70 backdrop-blur-md p-6 rounded-xl shadow-lg border border-gray-700">
-//         {/* Shape Select */}
-//         <div>
-//           <label className="block mb-2 font-medium">Shape</label>
-//           <select
-//             value={shape}
-//             onChange={(e) => setShape(e.target.value as ShapeType)}
-//             className="w-full p-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-//           >
-//             <option value="circle">Circle</option>
-//             <option value="rounded">Rounded Square</option>
-//             <option value="triangle">Triangle</option>
-//             <option value="hexagon">Hexagon</option>
-//             <option value="star">Star</option>
-//           </select>
-//         </div>
-
-//         {/* Size */}
-//         <div>
-//           <label className="block mb-2 font-medium">Size: {size}px</label>
-//           <input
-//             type="range"
-//             min="100"
-//             max="400"
-//             value={size}
-//             onChange={(e) => setSize(Number(e.target.value))}
-//             className="w-full"
-//           />
-//         </div>
-
-//         {/* Radius for rounded */}
-//         {shape === "rounded" && (
-//           <div>
-//             <label className="block mb-2 font-medium">Border Radius: {radius}px</label>
-//             <input
-//               type="range"
-//               min="0"
-//               max="200"
-//               value={radius}
-//               onChange={(e) => setRadius(Number(e.target.value))}
-//               className="w-full"
-//             />
-//           </div>
-//         )}
-
-//         {/* Gradient Type */}
-//         <div>
-//           <label className="block mb-2 font-medium">Gradient Type</label>
-//           <select
-//             value={gradientType}
-//             onChange={(e) => setGradientType(e.target.value as GradientType)}
-//             className="w-full p-2 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-//           >
-//             <option value="solid">Solid</option>
-//             <option value="linear">Linear</option>
-//             <option value="radial">Radial</option>
-//           </select>
-//         </div>
-
-//         {/* Color Pickers */}
-//         <div>
-//           <label className="block mb-2 font-medium">Color 1</label>
-//           <input
-//             type="color"
-//             value={color1}
-//             onChange={(e) => setColor1(e.target.value)}
-//             className="w-full h-10 border border-gray-600 rounded-md cursor-pointer"
-//           />
-//         </div>
-//         {gradientType !== "solid" && (
-//           <div>
-//             <label className="block mb-2 font-medium">Color 2</label>
-//             <input
-//               type="color"
-//               value={color2}
-//               onChange={(e) => setColor2(e.target.value)}
-//               className="w-full h-10 border border-gray-600 rounded-md cursor-pointer"
-//             />
-//           </div>
-//         )}
-//       </div>
-
-//       {/* Preview Panel */}
-//       <div className="flex justify-center w-full">
-//         <div className="bg-gray-800/50 backdrop-blur-md p-6 rounded-3xl shadow-2xl border border-gray-700">
-//           <svg
-//             ref={svgRef}
-//             width={animatedSize}
-//             height={animatedSize}
-//             viewBox={`0 0 ${animatedSize} ${animatedSize}`}
-//             className="transition-all duration-300"
-//           >
-//             <defs>
-//               <linearGradient id="gradLinear" x1="0%" y1="0%" x2="100%" y2="100%">
-//                 <stop offset="0%" stopColor={color1} />
-//                 <stop offset="100%" stopColor={color2} />
-//               </linearGradient>
-//               <radialGradient id="gradRadial">
-//                 <stop offset="0%" stopColor={color1} />
-//                 <stop offset="100%" stopColor={color2} />
-//               </radialGradient>
-//             </defs>
-
-//             {shape === "circle" && (
-//               <circle
-//                 cx={animatedSize / 2}
-//                 cy={animatedSize / 2}
-//                 r={animatedSize / 2}
-//                 fill={getFill()}
-//               />
-//             )}
-//             {shape === "rounded" && (
-//               <rect
-//                 width={animatedSize}
-//                 height={animatedSize}
-//                 rx={radius}
-//                 ry={radius}
-//                 fill={getFill()}
-//               />
-//             )}
-//             {shape === "triangle" && (
-//               <polygon
-//                 points={`${animatedSize / 2},0 ${animatedSize},${animatedSize} 0,${animatedSize}`}
-//                 fill={getFill()}
-//               />
-//             )}
-//             {(shape === "hexagon" || shape === "star") && (
-//               <polygon points={getPolygonPoints()} fill={getFill()} />
-//             )}
-//           </svg>
-//         </div>
-//       </div>
-
-//       {/* Download Buttons */}
-//       <div className="flex flex-wrap justify-center gap-4">
-//         <button
-//           onClick={downloadSVG}
-//           className="bg-indigo-600 text-white px-6 py-2 rounded-xl shadow-lg hover:bg-indigo-700 transition"
-//         >
-//           Download SVG
-//         </button>
-//         <button
-//           onClick={downloadPNG}
-//           className="bg-green-600 text-white px-6 py-2 rounded-xl shadow-lg hover:bg-green-700 transition"
-//         >
-//           Download PNG
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-// 'use client'
-
-// import { useState } from 'react'
-
-// export default function BgRemoveAdvanced() {
-//   const [image, setImage] = useState<File | null>(null)
-//   const [resultUrl, setResultUrl] = useState<string | null>(null)
-//   const [loading, setLoading] = useState(false)
-//   const [error, setError] = useState('')
-
-//   // Replace with your Remove.bg API key
-//   const REMOVE_BG_API_KEY = 'aLdTYx4Gshx5QwH41kakhBvD'
-
-//   // Handle file upload
-//   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     if (e.target.files && e.target.files[0]) {
-//       setImage(e.target.files[0])
-//       setResultUrl(null)
-//       setError('')
-//     }
-//   }
-
-//   // Call Remove.bg API to remove background
-//   const removeBackground = async () => {
-//     if (!image) return
-//     setLoading(true)
-//     setError('')
-
-//     try {
-//       const formData = new FormData()
-//       formData.append('image_file', image)
-//       formData.append('size', 'auto')
-
-//       const response = await fetch('https://api.remove.bg/v1.0/removebg', {
-//         method: 'POST',
-//         headers: {
-//           'X-Api-Key': REMOVE_BG_API_KEY,
-//         },
-//         body: formData,
-//       })
-
-//       if (!response.ok) {
-//         const errorText = await response.text()
-//         throw new Error(errorText)
-//       }
-
-//       const blob = await response.blob()
-//       const url = URL.createObjectURL(blob)
-//       setResultUrl(url)
-//     } catch (err: any) {
-//       setError(err.message || 'Error removing background')
-//     } finally {
-//       setLoading(false)
-//     }
-//   }
-
-//   // Download result
-//   const downloadResult = () => {
-//     if (!resultUrl) return
-//     const link = document.createElement('a')
-//     link.href = resultUrl
-//     link.download = 'background-removed.png'
-//     document.body.appendChild(link)
-//     link.click()
-//     document.body.removeChild(link)
-//   }
-
-//   return (
-//     <div className="min-h-screen flex flex-col items-center justify-center gap-6 p-8 bg-gray-900 text-white">
-//       <h2 className="text-2xl font-bold">Advanced Background Remover</h2>
-
-//       {/* File input */}
-//       <input
-//         type="file"
-//         accept="image/*"
-//         onChange={handleFileChange}
-//         className="text-black p-2 rounded"
-//       />
-
-//       {/* Buttons */}
-//       <div className="flex gap-4 mt-2">
-//         <button
-//           onClick={removeBackground}
-//           disabled={!image || loading}
-//           className="px-6 py-2 bg-green-600 hover:bg-green-500 rounded disabled:opacity-50"
-//         >
-//           {loading ? 'Removing...' : 'Remove Background'}
-//         </button>
-//         {resultUrl && (
-//           <button
-//             onClick={downloadResult}
-//             className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded"
-//           >
-//             Download
-//           </button>
-//         )}
-//       </div>
-
-//       {/* Error */}
-//       {error && <p className="text-red-500">{error}</p>}
-
-//       {/* Preview */}
-//       {image && !resultUrl && (
-//         <div className="relative w-80 h-80 border border-white/20 rounded overflow-hidden mt-4">
-//           <img
-//             src={URL.createObjectURL(image)}
-//             alt="Preview"
-//             className="w-full h-full object-cover"
-//           />
-//         </div>
-//       )}
-
-//       {resultUrl && (
-//         <div className="relative w-80 h-80 border border-white/20 rounded overflow-hidden mt-4">
-//           <img
-//             src={resultUrl}
-//             alt="Background Removed"
-//             className="w-full h-full object-cover"
-//           />
-//         </div>
-//       )}
-//     </div>
-//   )
-// }
-
-
-'use client'
-
-import { useState } from 'react'
-
-export default function BgRemoveAdvanced() {
-  const [image, setImage] = useState<File | null>(null)
-  const [resultUrl, setResultUrl] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-
-  // Replace with your Remove.bg API key
-  const REMOVE_BG_API_KEY = 'aLdTYx4Gshx5QwH41kakhBvD'
-
-  // Handle file upload
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0])
-      setResultUrl(null)
-      setError('')
-    }
-  }
-
-  // Remove background
-  const removeBackground = async () => {
-    if (!image) return
-    setLoading(true)
-    setError('')
-    setResultUrl(null)
-
-    try {
-      const formData = new FormData()
-      formData.append('image_file', image)
-      formData.append('size', 'auto')
-
-      const response = await fetch('https://api.remove.bg/v1.0/removebg', {
-        method: 'POST',
-        headers: {
-          'X-Api-Key': REMOVE_BG_API_KEY,
-        },
-        body: formData,
-      })
-
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(errorText)
-      }
-
-      const blob = await response.blob()
-      const url = URL.createObjectURL(blob)
-      setResultUrl(url)
-    } catch (err: any) {
-      setError(err.message || 'Error removing background')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Download result
-  const downloadResult = () => {
-    if (!resultUrl) return
-    const link = document.createElement('a')
-    link.href = resultUrl
-    link.download = 'bg-removed.png'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
-
+"use client";
+
+import Link from "next/link";
+
+const tools = [
+  "Image Compress",
+  "Glassmorphism",
+  "Shape Generator",
+  "Logo Generator",
+  "BG Remove",
+  "Color Palette",
+  "Text Extractor",
+  "Photo Editor",
+  "AI Tools",
+  "Copy Tool",
+  "Cloud Storage",
+  "Favorites",
+  "Refresh Tool",
+];
+
+export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center gap-6 p-8 bg-gray-900 text-white">
-      <h2 className="text-3xl font-bold">Advanced Background Remover</h2>
+    <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white">
 
-     <label className={`flex flex-col items-center justify-center border-2 border-dashed border-gray-700 rounded-xl p-10 cursor-pointer hover:border-blue-500 transition`}>
-          <span className="text-gray-400 mb-2">
-            Click to upload image
-          </span>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="hidden"
-          />
-        </label>
-
-      {/* File input */}
-      {/* <input
-        type="file"
-        accept="image/*"
-        onChange={handleFileChange}
-        className="text-black p-2 rounded"
-      /> */}
-
-      {/* Buttons */}
-      <div className="flex gap-4 mt-4">
-        <button
-          onClick={removeBackground}
-          disabled={!image || loading}
-          className="px-6 py-2 bg-green-600 hover:bg-green-500 rounded disabled:opacity-50 transition"
-        >
-          {loading ? 'Removing...' : 'Remove Background'}
-        </button>
-        {resultUrl && (
-          <button
-            onClick={downloadResult}
-            className="px-6 py-2 bg-blue-600 hover:bg-blue-500 rounded transition"
-          >
-            Download
-          </button>
-        )}
-      </div>
-
-      {/* Loading indicator */}
-      {loading && (
-        <div className="mt-4 flex flex-col items-center gap-2">
-          <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
-          <span className="text-sm text-gray-300">Processing image...</span>
+      {/* Navbar */}
+      <nav className="flex justify-between items-center px-8 py-6 backdrop-blur-md bg-white/5 border-b border-white/10">
+        <h1 className="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
+          DevEssentio
+        </h1>
+        <div className="space-x-6 text-gray-300 hidden md:flex">
+          <a href="#" className="hover:text-white transition">Home</a>
+          <a href="#tools" className="hover:text-white transition">Tools</a>
+          <a href="#about" className="hover:text-white transition">About</a>
         </div>
-      )}
+      </nav>
 
-      {/* Error */}
-      {error && <p className="text-red-500 mt-2">{error}</p>}
+      {/* Hero Section */}
+      <section className="text-center py-20 px-6">
+        <h2 className="text-5xl md:text-6xl font-extrabold leading-tight">
+          All Developer Tools <br />
+          <span className="bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+            In One Place
+          </span>
+        </h2>
+        <p className="text-gray-400 mt-6 max-w-2xl mx-auto text-lg">
+          Compress images, generate logos, remove backgrounds, extract text,
+          manage cloud storage and more — everything you need as a developer.
+        </p>
 
-      {/* Preview */}
-      <div className="">
-        {image && !resultUrl && (
-          <div className="relative w-64 h-64 rounded overflow-hidden mx-auto">
-            <img
-              src={URL.createObjectURL(image)}
-              alt="Preview"
-              className="w-full h-full object-cover"
-            />
-            <span className="absolute bottom-2 left-2 bg-black/50 text-xs px-2 py-1 rounded">
-              Original
-            </span>
+        <div className="mt-10">
+          <a
+            href="#tools"
+            className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white font-medium transition shadow-lg"
+          >
+            Explore Tools 🚀
+          </a>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-white/5 border-y border-white/10">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h3 className="text-3xl font-bold mb-12">Why Developers Love DevEssentio</h3>
+          <div className="grid md:grid-cols-3 gap-10">
+            <div>
+              <h4 className="text-xl font-semibold mb-3">⚡ Fast & Lightweight</h4>
+              <p className="text-gray-400">
+                Built for speed with optimized performance and smooth UI experience.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-xl font-semibold mb-3">🎨 Modern UI</h4>
+              <p className="text-gray-400">
+                Clean glassmorphism design with smooth animations and responsiveness.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-xl font-semibold mb-3">🔒 Secure & Reliable</h4>
+              <p className="text-gray-400">
+                Your data stays private with secure processing and storage.
+              </p>
+            </div>
           </div>
-        )}
+        </div>
+      </section>
 
-        {resultUrl && (
-          <div className="relative w-64 h-64 border border-white/20 rounded overflow-hidden mx-auto">
-            <img
-              src={resultUrl}
-              alt="Background Removed"
-              className="w-full h-full object-cover"
-            />
-            <span className="absolute bottom-2 left-2 bg-black/50 text-xs px-2 py-1 rounded">
-              Result
-            </span>
+      {/* Tools Grid */}
+      <section id="tools" className="px-8 py-20 max-w-7xl mx-auto">
+        <h3 className="text-3xl font-bold mb-10 text-center">
+          Powerful Tools
+        </h3>
+
+        <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {tools.map((tool, index) => (
+            <Link key={index} href={`/${tool.toLowerCase().replace(/\s+/g, "-")}`}>
+              <div className="p-6 rounded-xl backdrop-blur-xl bg-white/5 border border-white/10 hover:bg-white/10 transition transform hover:scale-105 cursor-pointer shadow-md">
+                <h4 className="text-lg font-semibold">{tool}</h4>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* How It Works */}
+      <section className="py-20 bg-white/5 border-y border-white/10">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <h3 className="text-3xl font-bold mb-12">How It Works</h3>
+          <div className="grid md:grid-cols-3 gap-10">
+            <div>
+              <h4 className="text-xl font-semibold mb-2">1️⃣ Choose a Tool</h4>
+              <p className="text-gray-400">
+                Select any tool from our growing library.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-xl font-semibold mb-2">2️⃣ Upload / Customize</h4>
+              <p className="text-gray-400">
+                Upload files or customize your settings instantly.
+              </p>
+            </div>
+            <div>
+              <h4 className="text-xl font-semibold mb-2">3️⃣ Download Result</h4>
+              <p className="text-gray-400">
+                Get your processed result in seconds.
+              </p>
+            </div>
           </div>
-        )}
-      </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-20">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <h3 className="text-3xl font-bold mb-12">What Developers Say</h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="p-6 bg-white/5 border border-white/10 rounded-xl">
+              <p className="text-gray-300">
+                “This platform saves me hours every week. Everything in one place!”
+              </p>
+              <span className="text-sm text-gray-500 block mt-4">— Frontend Dev</span>
+            </div>
+            <div className="p-6 bg-white/5 border border-white/10 rounded-xl">
+              <p className="text-gray-300">
+                “Super clean UI and blazing fast tools. Highly recommended.”
+              </p>
+              <span className="text-sm text-gray-500 block mt-4">— UI Designer</span>
+            </div>
+            <div className="p-6 bg-white/5 border border-white/10 rounded-xl">
+              <p className="text-gray-300">
+                “Finally a toolbox built for developers.”
+              </p>
+              <span className="text-sm text-gray-500 block mt-4">— Fullstack Engineer</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="text-center py-20 bg-gradient-to-r from-indigo-600 to-purple-600">
+        <h3 className="text-3xl md:text-4xl font-bold">
+          Ready to Boost Your Productivity?
+        </h3>
+        <p className="mt-4 text-gray-200">
+          Start using DevEssentio today — it’s fast, free, and powerful.
+        </p>
+        <div className="mt-8">
+          <a
+            href="#tools"
+            className="px-8 py-3 bg-black text-white rounded-lg font-semibold hover:bg-gray-900 transition"
+          >
+            Get Started 🚀
+          </a>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer id="about" className="text-center py-6 border-t border-white/10 text-gray-500 text-sm">
+        © {new Date().getFullYear()} DevEssentio. All rights reserved.
+      </footer>
     </div>
-  )
+  );
 }
