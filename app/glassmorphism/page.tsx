@@ -125,19 +125,16 @@ box-shadow: 0 ${shadow}px ${shadow * 2}px ${hexToRGBA(
               Glass Preview
             </div>
           </div>
-
           <div className="bg-black/60 p-5 rounded-xl space-y-4">
             <div>
               <h3 className="text-sm text-gray-400 mb-2">CSS</h3>
               <pre className="text-xs whitespace-pre-wrap">{cssCode}</pre>
             </div>
-
             <div>
               <h3 className="text-sm text-gray-400 mb-2">Tailwind</h3>
               <pre className="text-xs whitespace-pre-wrap">{tailwindCode}</pre>
             </div>
           </div>
-
         </div>
       </div>
     </div>
